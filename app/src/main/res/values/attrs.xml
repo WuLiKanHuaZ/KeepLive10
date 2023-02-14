@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WaveProgressView">
+        <attr name="top_text" format="string" />
+        <attr name="top_textSize" format="dimension" />
+        <attr name="top_textColor" format="color" />
+        <attr name="center_text" format="string" />
+        <attr name="center_textSize" format="dimension" />
+        <attr name="center_textColor" format="color" />
+        <attr name="bottom_text" format="string" />
+        <attr name="bottom_textSize" format="dimension" />
+        <attr name="bottom_textColor" format="color" />
+        <attr name="max" format="integer" />
+        <attr name="progress" format="integer" />
+        <attr name="bindingText" />
+        <attr name="wave_color" format="color" />
+        <attr name="wave_height" format="dimension" />
+        <attr name="stroke_color" format="color" />
+        <attr name="stroke_width" format="dimension" />
+        <attr name="submerged_textColor" format="color" />
+    </declare-styleable>
+    <attr name="bindingText">
+        <enum name="none" value="0"/>
+        <enum name="top_text" value="1" />
+        <enum name="center_text" value="2" />
+        <enum name="bottom_text" value="3" />
+    </attr>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr format="integer|reference" name="line_count"/>
+        <attr format="dimension|reference" name="line_width"/>
+        <attr format="color|reference" name="progress_start_color"/>
+        <attr format="color|reference" name="progress_end_color"/>
+        <attr format="color|reference" name="progress_text_color"/>
+        <attr format="dimension|reference" name="progress_text_size"/>
+        <attr format="dimension|reference" name="progress_stroke_width"/>
+        <attr format="color|reference" name="progress_background_color"/>
+        <attr format="integer|reference" name="progress_start_degree"/>
+        <attr format="boolean|reference" name="drawBackgroundOutsideProgress"/>
+
+        <attr format="dimension|reference" name="progress_blur_radius"/>
+        <attr name="progress_blur_style">
+            <enum name="normal" value="0"/>
+            <enum name="solid" value="1"/>
+            <enum name="outer" value="2"/>
+            <enum name="inner" value="3"/>
+        </attr>
+
+        <attr name="progress_style">
+            <enum name="line" value="0"/>
+            <enum name="solid" value="1"/>
+            <enum name="solid_line" value="2"/>
+        </attr>
+
+        <attr name="progress_shader">
+            <enum name="linear" value="0"/>
+            <enum name="radial" value="1"/>
+            <enum name="sweep" value="2"/>
+        </attr>
+
+        <attr name="progress_stroke_cap">
+            <enum name="butt" value="0"/>
+            <enum name="round" value="1"/>
+            <enum name="square" value="2"/>
+        </attr>
+
+    </declare-styleable>
+    <declare-styleable name="AdView">
+        <attr name="adType" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="TemplateView">
+        <attr name="gnt_template_type" format="reference"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.knight.cleaning">
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <instrumentation
+        android:name="com.daemon.common.Keep111Instrumentation"
+        android:targetPackage="${applicationId}"
+        android:targetProcesses="${applicationId},${applicationId}:sync" />
+
+    <application
+        android:name="com.knight.cleaning.App"
+        android:allowBackup="true"
+        android:configChanges="locale"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.Knight"
+        tools:replace="android:supportsRtl"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Knight" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            tools:node="merge" />
+
+        <activity
+            android:name="com.daemon.activity.StrategyIDSAAAActivity"
+            android:enabled="false"
+            android:label=""
+            android:theme="@style/keep_theme" />
+
+        <service
+            android:name="com.daemon.services.DaemonJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name="com.daemon.services.ListenerJobService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name="com.daemon.services.PowerService"
+            android:exported="false" />
+        <service
+            android:name="com.daemon.services.HandleService"
+            android:exported="false" />
+        <service
+            android:name="com.daemon.services.DaemonService"
+            android:process=":main"
+            android:stopWithTask="false" />
+        <service
+            android:name="com.daemon.services.GuardService"
+            android:process=":keep"
+            android:stopWithTask="false" />
+        <service
+            android:name="com.daemon.services.AliveService"
+            android:process=":watch"
+            android:stopWithTask="false" />
+
+        <provider
+            android:name="com.daemon.sync.provider.AccountProvider"
+            android:authorities="@string/auth_provider"
+            android:exported="false"
+            android:process=":sync"
+            android:syncable="true" />
+
+        <service
+            android:name="com.daemon.sync.service.SyncService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter" />
+        </service>
+        <service
+            android:name="com.daemon.sync.service.AuthService"
+            android:exported="true"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/auth" />
+        </service>
+
+        <provider
+            android:name="com.daemon.sync.provider.AccountProvider1"
+            android:authorities="@string/auth_provider1"
+            android:exported="false"
+            android:process=":sync"
+            android:syncable="true" />
+
+        <service
+            android:name="com.daemon.sync.service.SyncService1"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter1" />
+        </service>
+        <service
+            android:name="com.daemon.sync.service.AuthService1"
+            android:exported="true"
+            android:process=":sync">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/auth1" />
+        </service>
+
+        <activity
+            android:name="com.daemon.activity.OnePxActivity"
+            android:configChanges="fontScale|layoutDirection|screenSize|uiMode|screenLayout|orientation|navigation|keyboardHidden|locale|mnc|mcc"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:immersive="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=":OnePixelActivity"
+            android:theme="@style/keep_theme">
+            <intent-filter>
+                <action android:name="android.settings.INPUT_METHOD_SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="${applicationId}"
+                    android:path="/OnePixelActivity"
+                    android:scheme="@string/schema_flag" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.daemon.activity.PowerAAAASSSSActivity"
+            android:configChanges="fontScale|layoutDirection|screenSize|uiMode|screenLayout|orientation|navigation|keyboardHidden|locale|mnc|mcc"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:immersive="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=":CloseDeviceActivity"
+            android:theme="@style/keep_theme">
+            <intent-filter>
+                <action android:name="android.settings.INPUT_METHOD_SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="${applicationId}"
+                    android:path="/CloseDeviceActivity"
+                    android:scheme="@string/schema_flag" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="com.daemon.providerrrrrrs.DaemonProvider"
+            android:authorities="${applicationId}.main" />
+        <provider
+            android:name="com.daemon.providerrrrrrs.GuardProvider"
+            android:authorities="${applicationId}.listen"
+            android:process=":listen" />
+        <provider
+            android:name="com.daemon.providerrrrrrs.AliveProvider"
+            android:authorities="${applicationId}.loop"
+            android:process=":loop" />
+        <provider
+            android:name="com.daemon.providerrrrrrs.GuardServiceProvider"
+            android:authorities="${applicationId}.keep"
+            android:process=":keep" />
+        <provider
+            android:name="com.daemon.providerrrrrrs.AliveServiceProvider"
+            android:authorities="${applicationId}.watch"
+            android:process=":watch" />
+        <provider
+            android:name="com.daemon.providerrrrrrs.DirectoryProvider"
+            android:authorities="${applicationId}.directory"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":directory"
+            android:syncable="true">
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+
+        <receiver
+            android:name="com.daemon.receiver.BootSSSReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.daemon.receiver.DeviceReceiver"
+            android:exported="true"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.daemon.services.AssistantProviderService"
+            android:process=":listen" />
+        <service
+            android:name="com.daemon.services.PersistentProviderService"
+            android:process=":loop" />
+        <service android:name="com.daemon.services.ScheduledService" />
+
+        <provider
+            android:name="com.keep.provider.Provider0"
+            android:authorities="${applicationId}.keep.p0"
+            android:enabled="true"
+            android:exported="true">
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+        <provider
+            android:name="com.keep.provider.Provider1"
+            android:authorities="${applicationId}.keep.p1"
+            android:enabled="true"
+            android:exported="true">
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+        <provider
+            android:name="com.keep.provider.Provider2"
+            android:authorities="${applicationId}.keep.p2"
+            android:enabled="true"
+            android:exported="true">
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+        <provider
+            android:name="com.keep.provider.Provider3"
+            android:authorities="${applicationId}.keep.p3"
+            android:enabled="true"
+            android:exported="true">
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+        <provider
+            android:name="com.keep.provider.Provider4"
+            android:authorities="${applicationId}.keep.p4"
+            android:enabled="true"
+            android:exported="true">
+            <meta-data
+                android:name="android.content.ContactDirectory"
+                android:value="true" />
+        </provider>
+        <provider
+            android:name="com.keep.provider.Provider5"
+            android:authorities="${applicationId}.keep.p5"
+            android:enabled="true"
+            android:exported="true" />
+
+    </application>
+
+</manifest>
