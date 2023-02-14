@@ -1,10 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -28,7 +26,7 @@ android {
     }
     signingConfigs {
         config {
-            storeFile file("./release.jks")
+            storeFile file("release.jks")
             storePassword "123456"
             keyAlias "key0"
             keyPassword "123456"
